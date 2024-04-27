@@ -60,4 +60,15 @@ class movimientoController extends Controller
 
         return response()->json($movimiento, 201);
     }
+
+    public function saldo($usuario_id)
+    {
+        $usuario = Usuario::find($usuario_id);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        return response()->json(['saldo' => Movimiento::saldo($usuario_id)], 200);
+    }
 }
