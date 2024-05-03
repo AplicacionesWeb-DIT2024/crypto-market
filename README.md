@@ -36,3 +36,9 @@ Se usará React como framework. Las principales librerías que se utilizarán so
 
 # Backend
 Se utilizará PHP junto con Laravel para la implementación del backend.
+
+## Deploy en Vercel
+El sitio se encuentra en ejecución en la siguiente url: https://crypto-market-gi9z3t8ql-ramirocanario1s-projects.vercel.app/
+<p align="center">
+    <img src="https://logowik.com/content/uploads/images/vercel1868.jpg" width="400" alt="Laravel Logo">
+</p>
