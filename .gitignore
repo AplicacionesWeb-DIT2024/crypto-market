@@ -20,3 +20,4 @@ yarn-error.log
 
 .vercel
 composer.lock
+vercel.json
