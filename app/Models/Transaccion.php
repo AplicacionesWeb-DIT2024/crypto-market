@@ -32,4 +32,18 @@ class Transaccion extends Model
             ],
         ];
     }
+
+    public static function saldo_cripto($usuario_id, $cripto_id) {
+        $compras = Transaccion::where('usuario_id', $usuario_id)
+            ->where('cripto_id', $cripto_id)
+            ->where('tipo', 'COMPRA')
+            ->sum('cantidad');
+
+        $ventas = Transaccion::where('usuario_id', $usuario_id)
+            ->where('cripto_id', $cripto_id)
+            ->where('tipo', 'VENTA')
+            ->sum('cantidad');
+
+        return $compras - $ventas;
+    }
 }
