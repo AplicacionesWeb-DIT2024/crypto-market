@@ -28,7 +28,11 @@ class criptomonedaController extends Controller
         $datos = $response->json();
 
         $datosFiltrados = collect($datos)->map(function ($item) {
+
+            $id = Criptomoneda::where('simbolo', $item['id'])->first()['id'];
+
             return [
+                'id' => $id,
                 'id_api' => $item['id'],
                 'simbolo' => $item['symbol'],
                 'nombre' => $item['name'],
