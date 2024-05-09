@@ -122,4 +122,29 @@ class usuarioController extends Controller
 
         return response()->json($usuario, 200);
     }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $usuario = Usuario::where('email', $request->email)->first();
+
+        if (!$usuario || !password_verify($request->password, $usuario->password)) {
+            return response()->json([
+                'message' => 'Credenciales incorrectas',
+            ], 401);
+        }
+
+        return response()->json([
+            'message' => 'Login exitoso',
+            'usuario' => $usuario,
+        ], 200);
+    }
 }
