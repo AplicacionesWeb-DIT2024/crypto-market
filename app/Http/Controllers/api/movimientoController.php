@@ -19,6 +19,12 @@ class movimientoController extends Controller
 
     public function show($usuario_id)
     {
+        $usuario = Usuario::find($usuario_id);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
         $movimiento = Movimiento::where('usuario_id', $usuario_id)->get();
 
         return response()->json($movimiento, 200);
@@ -38,22 +44,19 @@ class movimientoController extends Controller
         }
 
         $monto = $request->input('monto');
+
+        if ($monto <= 0) {
+            return response()->json(['message' => 'Monto debe ser mayor a 0'], 400);
+        }
+
         $tipo = $request->input('tipo');
 
         if ($tipo == 'RETIRO') {
-            $saldo = $usuario->saldo;
+            $saldo = Movimiento::saldo($usuario->id);
 
             if ($saldo < $monto) {
                 return response()->json(['message' => 'Saldo insuficiente'], 400);
             }
-
-            $usuario->saldo = $saldo - $monto;
-            $usuario->save();
-        }
-
-        if ($tipo == 'DEPOSITO') {
-            $usuario->saldo = $usuario->saldo + $monto;
-            $usuario->save();
         }
 
         $movimiento = Movimiento::create($request->all());
