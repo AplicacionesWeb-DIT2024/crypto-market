@@ -21,8 +21,7 @@ class usuarioController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|unique:usuarios',
             'email' => 'required|email|unique:usuarios',
-            'password' => 'required|string',
-            'saldo' => 'required|numeric',
+            'password' => 'required|string'
         ]);
 
 
@@ -33,7 +32,6 @@ class usuarioController extends Controller
         $usuario = Usuario::create([
             'username' => $request->username,
             'email' => $request->email,
-            'saldo' => $request->saldo,
             'password' => bcrypt($request->password),
         ]);
 
@@ -64,8 +62,7 @@ class usuarioController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'string|unique:usuarios',
             'email' => 'email|unique:usuarios',
-            'password' => 'string',
-            'saldo' => 'numeric',
+            'password' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -75,7 +72,6 @@ class usuarioController extends Controller
         $usuario->username = $request->username ?? $usuario->username;
         $usuario->email = $request->email ?? $usuario->email;
         $usuario->password = $request->password ? bcrypt($request->password) : $usuario->password;
-        $usuario->saldo = $request->saldo ?? $usuario->saldo;
 
         if (!$usuario->save()) {
             return response()->json([
@@ -121,5 +117,30 @@ class usuarioController extends Controller
         }
 
         return response()->json($usuario, 200);
+    }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $usuario = Usuario::where('email', $request->email)->first();
+
+        if (!$usuario || !password_verify($request->password, $usuario->password)) {
+            return response()->json([
+                'message' => 'Credenciales incorrectas',
+            ], 401);
+        }
+
+        return response()->json([
+            'message' => 'Login exitoso',
+            'usuario' => $usuario,
+        ], 200);
     }
 }
