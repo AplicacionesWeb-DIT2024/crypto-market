@@ -35,14 +35,14 @@ class Movimiento extends Model
     // Funcion para obtener el saldo actual de un usuario
     public static function saldo($usuario_id)
     {
-        $depositos = Movimiento::where('usuario_id', $usuario_id)
-            ->where('tipo', 'DEPOSITO')
+        $ingresos = Movimiento::where('usuario_id', $usuario_id)
+            ->whereIn('tipo', ['DEPOSITO', 'VENTA'])
             ->sum('monto');
 
-        $retiros = Movimiento::where('usuario_id', $usuario_id)
-            ->where('tipo', 'RETIRO')
+        $egresos = Movimiento::where('usuario_id', $usuario_id)
+            ->whereIn('tipo', ['RETIRO', 'COMPRA'])
             ->sum('monto');
 
-        return $depositos - $retiros;
+        return $ingresos - $egresos;
     }
 }

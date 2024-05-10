@@ -66,10 +66,18 @@ class transaccionController extends Controller
         $transaccion->tipo = 'COMPRA';
         $transaccion->save();
 
+        $movimiento = new Movimiento();
+        $movimiento->tipo = 'COMPRA';
+        $movimiento->monto = $importe_total;
+        $movimiento->fecha = date('Y-m-d H:i:s');
+        $movimiento->usuario_id = $user_id;
+        $movimiento->save();
+
         // Retorno un mensaje con todos los datos
         return response()->json([
             'message' => 'Compra realizada con éxito',
-            'transaccion' => $transaccion
+            'transaccion' => $transaccion,
+            'movimiento' => $movimiento
         ]);
     }
 
@@ -123,10 +131,18 @@ class transaccionController extends Controller
         $transaccion->tipo = 'VENTA';
         $transaccion->save();
 
+        $movimiento = new Movimiento();
+        $movimiento->tipo = 'VENTA';
+        $movimiento->monto = $cantidad * $precio;
+        $movimiento->fecha = date('Y-m-d H:i:s');
+        $movimiento->usuario_id = $user_id;
+        $movimiento->save();
+
         // Retorno un mensaje con todos los datos
         return response()->json([
             'message' => 'Venta realizada con éxito',
-            'transaccion' => $transaccion
+            'transaccion' => $transaccion,
+            'movimiento' => $movimiento
         ]);
 
     }
