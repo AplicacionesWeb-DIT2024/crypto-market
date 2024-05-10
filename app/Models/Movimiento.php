@@ -24,7 +24,7 @@ class Movimiento extends Model
         return [
             'tipo' => [
                 'required',
-                Rule::in(['DEPOSITO', 'RETIRO']),
+                Rule::in(['DEPOSITO', 'RETIRO', 'COMPRA', 'VENTA']),
             ],
             'monto' => 'required|numeric',
             'fecha' => 'required|date',
