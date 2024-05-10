@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class transaccionController extends Controller
 {
+
+    public function index($usuario_id) {
+        $transacciones = Transaccion::where('usuario_id', $usuario_id)->with('cripto')->get();
+    
+        return response()->json($transacciones);
+    }
     
     public function comprar(){
 
