@@ -30,6 +30,7 @@ Route::get('/criptos/{id}', [criptomonedaController::class, 'show']);
 // Transacciones
 Route::post('/comprar', [transaccionController::class, 'comprar']);
 Route::post('/vender', [transaccionController::class, 'vender']);
+Route::get('/transacciones/{usuario_id}', [transaccionController::class, 'index']);
 
 // Comentarios
 // Route::get('/criptos/comentarios/{cripto_id}', [comentarioController::class, 'index']);

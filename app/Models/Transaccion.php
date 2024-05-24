@@ -33,6 +33,11 @@ class Transaccion extends Model
         ];
     }
 
+    public function cripto()
+    {
+        return $this->belongsTo(Criptomoneda::class, 'cripto_id');
+    }
+
     public static function saldo_cripto($usuario_id, $cripto_id) {
         $compras = Transaccion::where('usuario_id', $usuario_id)
             ->where('cripto_id', $cripto_id)

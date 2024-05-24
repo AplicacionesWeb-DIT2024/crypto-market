@@ -1,4 +1,20 @@
-## Deploy en Vercel
+# Avances al dia 10/05
+
+El avance del proyecto puede verse en el siguiente enlace: https://github.com/orgs/AplicacionesWeb-DIT2024/projects/1
+
+Endpoints implementados: 
+- Obtener todos los usuarios
+- Obtener un usuario
+- Registrar un usuario
+- Modificar un usuario
+- Login
+- Depositar y retirar dinero
+- Obtener todos los movimientos de un usuario
+- Obtener todos los movimientos (solo para desarrollo, no se usará en la aplicación)
+- Obtener todas las criptos y sus datos asociados
+- Registrar la compra de una cripto para un usuario
+
+# Deploy en Vercel
 El sitio se encuentra en ejecución en la siguiente url: https://crypto-market-gi9z3t8ql-ramirocanario1s-projects.vercel.app/
 <p align="center">
     <img src="https://logowik.com/content/uploads/images/vercel1868.jpg" width="400" alt="Laravel Logo">
