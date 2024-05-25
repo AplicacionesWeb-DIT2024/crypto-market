@@ -152,4 +152,9 @@ class transaccionController extends Controller
         ]);
 
     }
+
+    public function portfolio($usuario_id) {
+        $portfolio = Transaccion::get_portfolio($usuario_id);
+        return response()->json($portfolio);
+    }
 }

@@ -51,4 +51,22 @@ class Transaccion extends Model
 
         return $compras - $ventas;
     }
+
+    public static function get_portfolio($usuario_id) {
+        $criptos = Criptomoneda::all();
+        $portfolio = [];
+
+        foreach ($criptos as $cripto) {
+            $saldo = Transaccion::saldo_cripto($usuario_id, $cripto->id);
+
+            if ($saldo > 0) {
+                $portfolio[] = [
+                    'cripto' => $cripto,
+                    'saldo' => $saldo
+                ];
+            }
+        }
+
+        return $portfolio;
+    }
 }
