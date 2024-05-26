@@ -144,7 +144,7 @@ class criptomonedaController extends Controller
                 date('d/m/Y', strtotime($datos['market_data']['ath_date']['usd'])) : null,
             'maximo_historico_cambio' => $datos['market_data']['ath_change_percentage']['usd'],
             'capitalizacion' => $datos['market_data']['market_cap']['usd'],
-            'cambio_24h' => $datos['market_data']['price_change_24h_in_currency']['usd'],
+            'cambio_24h' => $datos['market_data']['price_change_percentage_24h_in_currency']['usd'],
             'cambio_7d' => $datos['market_data']['price_change_percentage_7d_in_currency']['usd'],
             'cambio_30d' => $datos['market_data']['price_change_percentage_30d_in_currency']['usd'],
             'cambio_1y' => $datos['market_data']['price_change_percentage_1y_in_currency']['usd'],
