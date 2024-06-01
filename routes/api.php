@@ -26,6 +26,7 @@ Route::get('/saldo/{usuario_id}', [movimientoController::class, 'saldo']);
 // Criptomonedas
 Route::get('/criptos', [criptomonedaController::class, 'index']);
 Route::get('/criptos/{id}', [criptomonedaController::class, 'show']);
+Route::get('/criptos/precio/{id}', [criptomonedaController::class, 'precio']);
 
 // Transacciones
 Route::post('/comprar', [transaccionController::class, 'comprar']);

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Criptomoneda;
 use Illuminate\Support\Facades\Http;
 
@@ -156,6 +155,26 @@ class criptomonedaController extends Controller
         return $datosFormateados;
     }
 
+    private function getPrecio($apiKey, $simbolo)
+    {
+        $baseUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=';
+        $url = $baseUrl . $simbolo . '&vs_currencies=usd';
+
+        $response = Http::withHeaders([
+            'x_cg_demo_api_key' => $apiKey,
+        ])->withOptions([
+            'verify' => false,
+        ])->get($url);
+
+        if ($response->failed()) {
+            return null;
+        }
+
+        $datos = $response->json();
+
+        return $datos[$simbolo]['usd'];
+    }
+
 
     public function show($id)
     {
@@ -173,5 +192,43 @@ class criptomonedaController extends Controller
         }
 
         return response()->json($response, 200);
+    }
+
+    public function precio($id)
+    {
+        $criptomoneda = Criptomoneda::where('simbolo', $id)->first();
+
+        if (!$criptomoneda) {
+            return response()->json(['message' => 'Criptomoneda no encontrada'], 404);
+        }
+
+        $apiKey = env('API_KEY');
+        $response = $this->getPrecio($apiKey, $criptomoneda->simbolo);
+
+        if ($response === null) {
+            return response()->json(['message' => 'Error al obtener los datos de la API'], 500);
+        }
+
+        $precio = $response;
+        $comision = $criptomoneda->comision;
+        $precio_final = $precio + ($precio * ($comision / 100));
+
+        return response()->json(['precio' => $precio_final], 200);
+    }
+
+    public function admin_index()
+    {
+        $criptos = Criptomoneda::all();
+
+        return response()->json($criptos, 200);
+    }
+
+    public function admin_store()
+    {
+        $datos = request()->validate(Criptomoneda::rules());
+
+        $cripto = Criptomoneda::create($datos);
+
+        return response()->json($cripto, 201);
     }
 }
