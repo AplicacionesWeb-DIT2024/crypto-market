@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Criptomoneda;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class criptomonedaController extends Controller
 {
@@ -216,19 +217,74 @@ class criptomonedaController extends Controller
         return response()->json(['precio' => $precio_final], 200);
     }
 
-    public function admin_index()
-    {
-        $criptos = Criptomoneda::all();
+    public function admin_index() {
+        $criptomonedas = Criptomoneda::all();
 
-        return response()->json($criptos, 200);
+        return response()->json($criptomonedas, 200);
     }
 
-    public function admin_store()
-    {
-        $datos = request()->validate(Criptomoneda::rules());
+    public function admin_store() {
+        $validator = Validator::make(request()->all(), [
+            'simbolo' => 'required',
+            'comision' => 'required',
+        ]);
 
-        $cripto = Criptomoneda::create($datos);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
-        return response()->json($cripto, 201);
+        $criptomoneda = new Criptomoneda();
+        $criptomoneda->simbolo = request('simbolo');
+        $criptomoneda->comision = request('comision');
+
+        $criptomoneda->save();
+
+        return response()->json($criptomoneda, 201);
+    }
+
+    public function admin_update($id) {
+        $criptomoneda = Criptomoneda::find($id);
+    
+        if (!$criptomoneda) {
+            return response()->json(['message' => 'Criptomoneda no encontrada'], 404);
+        }
+    
+        $validator = Validator::make(request()->all(), [
+            'simbolo' => 'required',
+            'comision' => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+    
+        $criptomoneda->simbolo = request('simbolo');
+        $criptomoneda->comision = request('comision');
+    
+        $criptomoneda->save();
+    
+        return response()->json($criptomoneda, 200);
+    }
+
+    public function admin_destroy($id) {
+        $criptomoneda = Criptomoneda::find($id);
+    
+        if (!$criptomoneda) {
+            return response()->json(['message' => 'Criptomoneda no encontrada'], 404);
+        }
+    
+        $criptomoneda->delete();
+    
+        return response()->json(['message' => 'Criptomoneda eliminada'], 200);
+    }
+
+    public function admin_show($id) {
+        $criptomoneda = Criptomoneda::find($id);
+    
+        if (!$criptomoneda) {
+            return response()->json(['message' => 'Criptomoneda no encontrada'], 404);
+        }
+    
+        return response()->json($criptomoneda, 200);
     }
 }

@@ -34,6 +34,9 @@ Route::post('/vender', [transaccionController::class, 'vender']);
 Route::get('/transacciones/{usuario_id}', [transaccionController::class, 'index']);
 Route::get('/portfolio/{usuario_id}', [transaccionController::class, 'portfolio']);
 
-// Comentarios
-// Route::get('/criptos/comentarios/{cripto_id}', [comentarioController::class, 'index']);
-// Route::post('/criptos/comentarios/{cripto_id}', [comentarioController::class, 'store']);
+// Rutas para los admin
+Route::get('/admin/criptos', [criptomonedaController::class, 'admin_index']);
+Route::get('/admin/criptos/{id}', [criptomonedaController::class, 'admin_show']);
+Route::post('/admin/criptos/registrar', [criptomonedaController::class, 'admin_store']);
+Route::patch('/admin/criptos/actualizar/{id}', [criptomonedaController::class, 'admin_update']);
+Route::delete('/admin/criptos/eliminar/{id}', [criptomonedaController::class, 'admin_destroy']);
