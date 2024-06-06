@@ -6,6 +6,25 @@ use App\Http\Controllers\api\movimientoController;
 use App\Http\Controllers\api\criptomonedaController;
 use App\Http\Controllers\api\transaccionController;
 
+
+Route::get("/status", function(){
+
+    // Obtener hora UTC-3
+    $hora = new DateTime("now", new DateTimeZone('America/Argentina/Buenos_Aires'));
+
+    // Crear un arreglo con la información
+    $info = [
+        "estado" => "ok",
+        "hora" => $hora
+    ];
+
+    // Convertir el arreglo a un JSON
+    $json = json_encode($info);
+
+    // Devolver la respuesta
+    return $json;
+});
+
 //  Usuarios
 Route::get('/usuarios', [usuarioController::class, 'index']);
 Route::get('/usuarios/{id}', [usuarioController::class, 'show']);
