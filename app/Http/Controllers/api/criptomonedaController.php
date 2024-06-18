@@ -12,6 +12,11 @@ class criptomonedaController extends Controller
 
     private function obtenerDatosDeApi($apiKey)
     {
+
+        if (empty($apiKey)) {
+            throw new \Exception('API key no está definida');
+        }
+
         $baseUrl = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?skip_invalid=true&id=';
         $simbolos = Criptomoneda::all()->pluck('simbolo')->implode(',');
 
@@ -33,6 +38,7 @@ class criptomonedaController extends Controller
     public function index()
     {
         $apiKey = env('API_KEY');
+
         $response = $this->obtenerDatosDeApi($apiKey);
 
         if ($response === null) {
