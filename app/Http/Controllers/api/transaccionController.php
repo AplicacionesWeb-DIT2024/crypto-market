@@ -124,7 +124,7 @@ class transaccionController extends Controller
         // Verifico si el usuario tiene saldo suficiente
         if ($saldo_cripto < $cantidad) {
             return response()->json([
-                'message' => 'Saldo insuficiente para realizar la compra. El usuario tiene $'.$saldo_cripto.' y quiere vender $'.$cantidad
+                'message' => 'Saldo insuficiente para realizar la venta. El usuario tiene $'.$saldo_cripto.' y quiere vender $'.$cantidad
             ], 400);
         }
 
