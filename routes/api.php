@@ -1,12 +1,29 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\usuarioController;
 use App\Http\Controllers\api\movimientoController;
 use App\Http\Controllers\api\criptomonedaController;
 use App\Http\Controllers\api\transaccionController;
-use App\Http\Controllers\api\comentarioController;
+
+
+Route::get("/status", function(){
+
+    // Obtener hora UTC-3
+    $hora = new DateTime("now", new DateTimeZone('America/Argentina/Buenos_Aires'));
+
+    // Crear un arreglo con la información
+    $info = [
+        "estado" => "ok",
+        "hora" => $hora
+    ];
+
+    // Convertir el arreglo a un JSON
+    $json = json_encode($info);
+
+    // Devolver la respuesta
+    return $json;
+});
 
 //  Usuarios
 Route::get('/usuarios', [usuarioController::class, 'index']);
@@ -26,12 +43,17 @@ Route::get('/saldo/{usuario_id}', [movimientoController::class, 'saldo']);
 // Criptomonedas
 Route::get('/criptos', [criptomonedaController::class, 'index']);
 Route::get('/criptos/{id}', [criptomonedaController::class, 'show']);
+Route::get('/criptos/precio/{id}', [criptomonedaController::class, 'precio']);
 
 // Transacciones
 Route::post('/comprar', [transaccionController::class, 'comprar']);
 Route::post('/vender', [transaccionController::class, 'vender']);
 Route::get('/transacciones/{usuario_id}', [transaccionController::class, 'index']);
+Route::get('/portfolio/{usuario_id}', [transaccionController::class, 'portfolio']);
 
-// Comentarios
-// Route::get('/criptos/comentarios/{cripto_id}', [comentarioController::class, 'index']);
-// Route::post('/criptos/comentarios/{cripto_id}', [comentarioController::class, 'store']);
+// Rutas para los admin
+Route::get('/admin/criptos', [criptomonedaController::class, 'admin_index']);
+Route::get('/admin/criptos/{id}', [criptomonedaController::class, 'admin_show']);
+Route::post('/admin/criptos/registrar', [criptomonedaController::class, 'admin_store']);
+Route::patch('/admin/criptos/actualizar/{id}', [criptomonedaController::class, 'admin_update']);
+Route::delete('/admin/criptos/eliminar/{id}', [criptomonedaController::class, 'admin_destroy']);

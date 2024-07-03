@@ -1,3 +1,9 @@
+# Presentación de la aplicación
+
+Video explicando todas las funcionalidades: https://www.youtube.com/watch?v=UeJWowhTEmo&ab_channel=RamiroCanario 
+
+Repositorio del frontend: https://github.com/ramirocanario1/crypto-front
+
 # Avances al dia 10/05
 
 El avance del proyecto puede verse en el siguiente enlace: https://github.com/orgs/AplicacionesWeb-DIT2024/projects/1
@@ -14,14 +20,9 @@ Endpoints implementados:
 - Obtener todas las criptos y sus datos asociados
 - Registrar la compra de una cripto para un usuario
 
-# Deploy en Vercel
-El sitio se encuentra en ejecución en la siguiente url: https://crypto-market-gi9z3t8ql-ramirocanario1s-projects.vercel.app/
-<p align="center">
-    <img src="https://logowik.com/content/uploads/images/vercel1868.jpg" width="400" alt="Laravel Logo">
-</p>
-
 # Laravel
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+
 # crypto-market
 Tienda online en donde se pueden comprar criptomonedas.
 
@@ -60,9 +61,3 @@ Se usará React como framework. Las principales librerías que se utilizarán so
 
 # Backend
 Se utilizará PHP junto con Laravel para la implementación del backend.
-
-## Deploy en Vercel
-El sitio se encuentra en ejecución en la siguiente url: https://crypto-market-gi9z3t8ql-ramirocanario1s-projects.vercel.app/
-<p align="center">
-    <img src="https://logowik.com/content/uploads/images/vercel1868.jpg" width="400" alt="Laravel Logo">
-</p>

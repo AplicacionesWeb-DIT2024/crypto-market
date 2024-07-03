@@ -47,7 +47,7 @@ class transaccionController extends Controller
             ], 404);
         }
 
-        $cripto = Criptomoneda::find($cripto_id);
+        $cripto = Criptomoneda::where('simbolo', $cripto_id)->first();
         if (!$cripto) {
             return response()->json([
                 'message' => 'Criptomoneda no encontrada'
@@ -66,7 +66,7 @@ class transaccionController extends Controller
         // Creo la transaccion de compra
         $transaccion = new Transaccion();
         $transaccion->usuario_id = $user_id;
-        $transaccion->cripto_id = $cripto_id;
+        $transaccion->cripto_id = $cripto->id;
         $transaccion->precio = $precio;
         $transaccion->cantidad = $cantidad;
         $transaccion->tipo = 'COMPRA';
@@ -124,7 +124,7 @@ class transaccionController extends Controller
         // Verifico si el usuario tiene saldo suficiente
         if ($saldo_cripto < $cantidad) {
             return response()->json([
-                'message' => 'Saldo insuficiente para realizar la compra. El usuario tiene $'.$saldo_cripto.' y quiere vender $'.$cantidad
+                'message' => 'Saldo insuficiente para realizar la venta. El usuario tiene $'.$saldo_cripto.' y quiere vender $'.$cantidad
             ], 400);
         }
 
@@ -151,5 +151,10 @@ class transaccionController extends Controller
             'movimiento' => $movimiento
         ]);
 
+    }
+
+    public function portfolio($usuario_id) {
+        $portfolio = Transaccion::get_portfolio($usuario_id);
+        return response()->json($portfolio);
     }
 }
